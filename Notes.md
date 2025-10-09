@@ -35,6 +35,7 @@ getAdvice();
 }, []);
 
 return (
+
 <div>
 <h1>{advice}</h1>
 <button onClick={getAdvice}>Get Advice</button>
@@ -48,3 +49,13 @@ function Message(props) {
 console.log(props);
 return <p>Count: {props.adviceCount}</p>;
 }
+
+======== Server Side & Client Side Rendering ===================
+
+Client-Side Rendering (CSR)
+Definition:
+In Client-Side Rendering, the browser (client) downloads a mostly empty HTML file and then uses JavaScript to render the content dynamically.
+
+Server-Side Rendering (SSR)
+Definition:
+In Server-Side Rendering, the server prepares and sends a fully rendered HTML page for each request.
