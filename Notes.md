@@ -59,3 +59,28 @@ In Client-Side Rendering, the browser (client) downloads a mostly empty HTML fil
 Server-Side Rendering (SSR)
 Definition:
 In Server-Side Rendering, the server prepares and sends a fully rendered HTML page for each request.
+
+========================== Strict Mode ===============
+
+Its redenders component twice and gives warning if we used any depricated API's
+
+========================== Components ===============
+
+👉 React applications are entirely made out of components
+
+👉 Building blocks of user interfaces in React
+
+👉 Piece of UI that has its own data, logic, and appearance (how it works and looks)
+
+👉 We build complex UIs by building multiple components and combining them
+
+👉 Components can be reused, nested inside each other, and pass data between them
+
+================== Creating and Reusing Components ==================
+
+In react, we create component using function
+
+Rules:
+
+- Component name should always start with upeercase.
+- Component should return JSX or Null
