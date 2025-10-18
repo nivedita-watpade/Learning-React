@@ -82,5 +82,21 @@ In react, we create component using function
 
 Rules:
 
-- Component name should always start with upeercase.
+- Component name should always start with uppercase.
 - Component should return JSX or Null
+
+============================== JSX ===============================
+
+JSX:
+👉 Declarative syntax to describe what components look like and how they work
+
+👉 Components must return a block of JSX
+
+👉 Extension of JavaScript that allows us to embed JavaScript, CSS, and React components into HTML
+
+👉 Each JSX element is converted to a React.createElement function call
+
+👉 We could use React without JSX
+
+React is Declarative : In this case, Tell JSX what to display on the UI not how to display or update it.
+Imperative: We have to manually select DOM elements and updated DOM properties.
