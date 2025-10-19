@@ -100,3 +100,36 @@ JSX:
 
 React is Declarative : In this case, Tell JSX what to display on the UI not how to display or update it.
 Imperative: We have to manually select DOM elements and updated DOM properties.
+
+========================== Styling React Component ===================================
+
+<h1 style={{ fontSize: "48px", color: "red", textTransform: "uppercase" }}>Fast React Pizza Co.</h1>
+
+Adding classes: We have className instead of class in react JS. Because class is a reserved keyword.
+
+<header className="header"></header>
+
+======================== Props in React JS =====================
+
+Definition:
+Props (short for properties) are used in React to pass data from one component to another, typically from a parent component to a child component. They make components reusable and dynamic.
+
+// Parent Component
+function App() {
+return (
+<div>
+<Greeting name="Nivedita" />
+<Greeting name="Pranit" />
+</div>
+);
+}
+
+// Child Component
+function Greeting(props) {
+return <h2>Hello, {props.name}!</h2>;
+}
+
+export default App;
+
+//Hello, Nivedita!
+Hello, Pranit!

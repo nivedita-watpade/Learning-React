@@ -1,3 +1,5 @@
+import "./index.css";
+
 const pizzaData = [
   {
     name: "Focaccia",
@@ -45,7 +47,7 @@ const pizzaData = [
 
 function App() {
   return (
-    <div>
+    <div className="container">
       <Header />
       <Menu />
       <Footer />
@@ -54,16 +56,28 @@ function App() {
 }
 
 function Header() {
-  return <h1>Fast React Pizza Co.</h1>;
+  return (
+    <header className="header">
+      {/* <h1 style={{ fontSize: "48px", color: "red", textTransform: "uppercase" }}>
+      Fast React Pizza Co.
+    </h1> */}
+      <h1> Fast React Pizza Co.</h1>
+    </header>
+  );
 }
 
 function Menu() {
   return (
-    <div>
+    <main className="menu">
       <h2>Our Menu</h2>
-      <Pizaa />
-      <Pizaa />
-    </div>
+      <Pizaa pizza={pizzaData[0]} />
+      <Pizaa pizza={pizzaData[1]} />
+      <Pizaa pizza={pizzaData[2]} />
+      <Pizaa pizza={pizzaData[3]} />
+      <Pizaa pizza={pizzaData[4]} />
+      <Pizaa pizza={pizzaData[5]} />
+      <Pizaa pizza={pizzaData[6]} />
+    </main>
   );
 }
 
@@ -73,7 +87,7 @@ function Footer() {
   const closeHour = 22;
 
   return (
-    <footer>
+    <footer className="footer">
       {hour}
       {hour >= openHour && hour <= closeHour
         ? " We are currently open!"
@@ -82,12 +96,19 @@ function Footer() {
   );
 }
 
-function Pizaa() {
+function Pizaa(props) {
+  // console.log(props);
+  if (!props.pizza) {
+    return null;
+  }
   return (
-    <div>
-      <img src={pizzaData[2].photoName} alt="Pizza Image" />
-      <h2>{pizzaData[2].name}</h2>
-      <p>{pizzaData[2].ingredients}</p>
+    <div className="pizza">
+      <img src={props.pizza?.photoName} alt={props.pizza?.name} />
+      <div>
+        <h3>{props.pizza?.name}</h3>
+        <p>{props.pizza?.ingredients}</p>
+        <span>{props.pizza?.price}</span>
+      </div>
     </div>
   );
 }
