@@ -1,4 +1,5 @@
 import "./index.css";
+import ProfileCard from "./ProfileCard";
 
 const pizzaData = [
   {
@@ -45,6 +46,15 @@ const pizzaData = [
   },
 ];
 
+const user = [
+  {
+    userImg: "pizzas/focaccia.jpg",
+    name: "Nivedita Watpade",
+    bio: "I’m a creative and detail-oriented UI Developer with over 5 years of experience in designing and developing responsive,user-focused web interfaces. Skilled in HTML, CSS, JavaScript, and React.js.",
+    skills: ["HTML", "CSS", "Javascript", "React JS"],
+  },
+];
+
 function App() {
   return (
     <div className="container">
@@ -77,6 +87,10 @@ function Menu() {
       <Pizaa pizza={pizzaData[4]} />
       <Pizaa pizza={pizzaData[5]} />
       <Pizaa pizza={pizzaData[6]} />
+      <hr></hr>
+      <hr></hr>
+      <hr></hr>
+      <ProfileCard info={user[0]} />
     </main>
   );
 }

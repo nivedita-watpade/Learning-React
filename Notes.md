@@ -117,6 +117,7 @@ Props (short for properties) are used in React to pass data from one component t
 // Parent Component
 function App() {
 return (
+
 <div>
 <Greeting name="Nivedita" />
 <Greeting name="Pranit" />
@@ -133,3 +134,18 @@ export default App;
 
 //Hello, Nivedita!
 Hello, Pranit!
+
+👉 Props are used to pass data from parent components to child components (down the component tree)
+
+👉 Essential tool to configure and customize components (like function parameters)
+
+👉 With props, parent components control how child components look and work
+
+👉 Anything can be passed as props: single values, arrays, objects, functions, even other components
+
+In React, props are read-only — meaning that a component must never modify its own props.
+They are meant to be immutable inside the child component. If you need to change data, you do it at the parent level and pass new props down.
+
+Props are not updated by the child. Only parent can update it
+
+One-way data flow (also called unidirectional data flow) means that data in React always flows in a single direction — from parent components down to child components via props.
