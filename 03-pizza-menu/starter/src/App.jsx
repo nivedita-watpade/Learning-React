@@ -80,20 +80,42 @@ function Menu() {
   return (
     <main className="menu">
       <h2>Our Menu</h2>
-      <Pizaa pizza={pizzaData[0]} />
+      {/* <Pizaa pizza={pizzaData[0]} />
       <Pizaa pizza={pizzaData[1]} />
       <Pizaa pizza={pizzaData[2]} />
       <Pizaa pizza={pizzaData[3]} />
       <Pizaa pizza={pizzaData[4]} />
       <Pizaa pizza={pizzaData[5]} />
-      <Pizaa pizza={pizzaData[6]} />
+      <Pizaa pizza={pizzaData[6]} /> */}
+      {/* <hr></hr>
       <hr></hr>
       <hr></hr>
-      <hr></hr>
-      <ProfileCard info={user[0]} />
+      <ProfileCard info={user[0]} /> */}
+      <ul className="pizzas">
+        {pizzaData.map((pizza, i) => {
+          return <Pizaa pizzaObj={pizza} key={i} />;
+        })}
+      </ul>
     </main>
   );
 }
+
+// function Menu1() {
+//   const pizzaItems = [];
+
+//   if (pizzaData) {
+//     for (const [i, pizza] of pizzaData.entries()) {
+//       pizzaItems.push(<Pizza pizzaData={pizza} key={i} />);
+//     }
+//   }
+
+//   return (
+//     <main className="menu">
+//       <h2>Our menu</h2>
+//       <ul className="pizzas">{pizzaItems}</ul>
+//     </main>
+//   );
+// }
 
 function Footer() {
   const hour = new Date().getHours();
@@ -111,19 +133,21 @@ function Footer() {
 }
 
 function Pizaa(props) {
-  // console.log(props);
-  if (!props.pizza) {
-    return null;
-  }
+  const { pizzaObj } = props;
+  console.log(pizzaObj);
+  // if (!pizzaObj) {
+  //   return null;
+  // }
+
   return (
-    <div className="pizza">
-      <img src={props.pizza?.photoName} alt={props.pizza?.name} />
+    <li className="pizza">
+      <img src={pizzaObj?.photoName} alt={pizzaObj?.name} />
       <div>
-        <h3>{props.pizza?.name}</h3>
-        <p>{props.pizza?.ingredients}</p>
-        <span>{props.pizza?.price}</span>
+        <h3>{pizzaObj?.name}</h3>
+        <p>{pizzaObj?.ingredients}</p>
+        <span>{pizzaObj?.price}</span>
       </div>
-    </div>
+    </li>
   );
 }
 

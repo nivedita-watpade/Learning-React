@@ -149,3 +149,59 @@ They are meant to be immutable inside the child component. If you need to change
 Props are not updated by the child. Only parent can update it
 
 One-way data flow (also called unidirectional data flow) means that data in React always flows in a single direction — from parent components down to child components via props.
+
+======================= Rules of JSX =========================
+GENERAL JSX RULES
+
+👉 JSX works essentially like HTML, but we can enter “JavaScript mode” by using {} (for text or attributes).
+👉 We can place JavaScript expressions inside {}.
+Examples: reference variables, create arrays or objects, [].map(), ternary operator.
+👉 Statements are not allowed (if/else, for, switch).
+👉 JSX produces a JavaScript expression
+const el = <h1>Hello React!</h1>;
+const el = React.createElement("h1", null, "Hello React!");
+1️⃣ We can place other pieces of JSX inside {}.
+2️⃣ We can write JSX anywhere inside a component (in if/else, assign to variables, pass it into functions).
+👉 A piece of JSX can only have one root element. If you need more, use <React.Fragment> (or the short <>).
+
+============================= Rendering list (Using map() method) ======================
+
+In React, rendering a list means displaying multiple elements (like items, cards, or components) by looping over an array and creating JSX elements for each item.
+
+1. What is JSX Array Rendering
+   React can render an array of JSX elements directly inside the component’s return statement.
+   Each element in that array is treated as part of the UI.
+
+Ex.
+function App() {
+const fruits = ['Apple', 'Banana', 'Mango'];
+
+// Create an array of JSX elements using map()
+const fruitList = fruits.map((fruit, index) => (
+<li key={index}>{fruit}</li>
+));
+return (
+<ul>{fruitList}</ul> // React renders the array of <li> elements
+);
+}
+
+export default App;
+
+2. Why We Use map()
+   The .map() method is used to loop through an array and return a new array of JSX elements.
+   React then renders each of those JSX elements.
+   Ex.
+   function App() {
+   const users = ['Nivedita', 'Ravi', 'Priya'];
+
+return (
+<div>
+<h2>User List</h2>
+<ul>
+{users.map((user, index) => (
+<li key={index}>{user}</li>
+))}
+</ul>
+</div>
+);
+}
