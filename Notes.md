@@ -220,3 +220,15 @@ If isLoggedIn is true → it shows: You are logged in.
 If isLoggedIn is false, React ignores the element (renders nothing bcoz react do not renders boolean values).
 
 Note: React do not renders boolean values
+
+=============================== Conditional Rendering With Ternaries ==================================
+
+In React, ternary operators are a concise way to render components or elements conditionally — that is, to show one thing or another based on a condition.
+
+function Greeting({ isLoggedIn }) {
+return (
+<div>
+{isLoggedIn ? <h1>Welcome back!</h1> : <h1>Please sign in.</h1>}
+</div>
+);
+}

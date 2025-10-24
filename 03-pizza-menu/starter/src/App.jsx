@@ -92,12 +92,22 @@ function Menu() {
       <hr></hr>
       <ProfileCard info={user[0]} /> */}
 
-      {pizzaData.length > 0 && (
+      {/* {pizzaData.length > 0 && (
         <ul className="pizzas">
           {pizzaData.map((pizza, i) => {
             return <Pizaa pizzaObj={pizza} key={i} />;
           })}
         </ul>
+      )} */}
+
+      {pizzaData.length > 0 ? (
+        <ul className="pizzas">
+          {pizzaData.map((pizza, i) => {
+            return <Pizaa pizzaObj={pizza} key={i} />;
+          })}
+        </ul>
+      ) : (
+        <p>We are still working on our menu. Please come back later</p>
       )}
     </main>
   );
@@ -128,13 +138,23 @@ function Footer() {
 
   return (
     <footer className="footer">
-      {isOpen && (
+      {/* {isOpen && (
         <div className="order">
           <p>
             We are open until {closeHour}:00. Come visit us or order online.
           </p>
           <button className="btn">Order</button>
         </div>
+      )} */}
+      {isOpen ? (
+        <div className="order">
+          <p>
+            We are open until {closeHour}:00. Come visit us or order online.
+          </p>
+          <button className="btn">Order</button>
+        </div>
+      ) : (
+        <p>Sorry, We are closed </p>
       )}
     </footer>
   );
@@ -146,6 +166,8 @@ function Pizaa(props) {
   // if (!pizzaObj) {
   //   return null;
   // }
+
+  if (pizzaObj?.soldOut) return null;
 
   return (
     <li className="pizza">
