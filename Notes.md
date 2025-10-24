@@ -178,6 +178,7 @@ const fruits = ['Apple', 'Banana', 'Mango'];
 
 // Create an array of JSX elements using map()
 const fruitList = fruits.map((fruit, index) => (
+
 <li key={index}>{fruit}</li>
 ));
 return (
@@ -195,6 +196,7 @@ export default App;
    const users = ['Nivedita', 'Ravi', 'Priya'];
 
 return (
+
 <div>
 <h2>User List</h2>
 <ul>
@@ -205,3 +207,16 @@ return (
 </div>
 );
 }
+
+================================= Conditional Rendering With Ternaries =======================
+
+Conditional Rendering with && in React JS
+
+In React, you can use the logical AND (&&) operator to conditionally render elements — this is a short and simple way to render something only if a condition is true.
+Ex.
+{isLoggedIn && <p>You are logged in.</p>}
+
+If isLoggedIn is true → it shows: You are logged in.
+If isLoggedIn is false, React ignores the element (renders nothing bcoz react do not renders boolean values).
+
+Note: React do not renders boolean values

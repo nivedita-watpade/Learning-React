@@ -91,11 +91,14 @@ function Menu() {
       <hr></hr>
       <hr></hr>
       <ProfileCard info={user[0]} /> */}
-      <ul className="pizzas">
-        {pizzaData.map((pizza, i) => {
-          return <Pizaa pizzaObj={pizza} key={i} />;
-        })}
-      </ul>
+
+      {pizzaData.length > 0 && (
+        <ul className="pizzas">
+          {pizzaData.map((pizza, i) => {
+            return <Pizaa pizzaObj={pizza} key={i} />;
+          })}
+        </ul>
+      )}
     </main>
   );
 }
@@ -121,13 +124,18 @@ function Footer() {
   const hour = new Date().getHours();
   const openHour = 12;
   const closeHour = 22;
+  const isOpen = hour >= openHour && hour <= closeHour;
 
   return (
     <footer className="footer">
-      {hour}
-      {hour >= openHour && hour <= closeHour
-        ? " We are currently open!"
-        : " Sorry, We are closed !"}
+      {isOpen && (
+        <div className="order">
+          <p>
+            We are open until {closeHour}:00. Come visit us or order online.
+          </p>
+          <button className="btn">Order</button>
+        </div>
+      )}
     </footer>
   );
 }
