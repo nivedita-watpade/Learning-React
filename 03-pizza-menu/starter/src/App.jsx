@@ -46,14 +46,14 @@ const pizzaData = [
   },
 ];
 
-const user = [
-  {
-    userImg: "pizzas/focaccia.jpg",
-    name: "Nivedita Watpade",
-    bio: "I’m a creative and detail-oriented UI Developer with over 5 years of experience in designing and developing responsive,user-focused web interfaces. Skilled in HTML, CSS, JavaScript, and React.js.",
-    skills: ["HTML", "CSS", "Javascript", "React JS"],
-  },
-];
+// const user = [
+//   {
+//     userImg: "pizzas/focaccia.jpg",
+//     name: "Nivedita Watpade",
+//     bio: "I’m a creative and detail-oriented UI Developer with over 5 years of experience in designing and developing responsive,user-focused web interfaces. Skilled in HTML, CSS, JavaScript, and React.js.",
+//     skills: ["HTML", "CSS", "Javascript", "React JS"],
+//   },
+// ];
 
 function App() {
   return (
@@ -146,23 +146,24 @@ function Footer() {
           <button className="btn">Order</button>
         </div>
       )} */}
-      {isOpen ? (
-        <div className="order">
-          <p>
-            We are open until {closeHour}:00. Come visit us or order online.
-          </p>
-          <button className="btn">Order</button>
-        </div>
-      ) : (
-        <p>Sorry, We are closed </p>
-      )}
+      {isOpen ? <Order closeHour={closeHour} /> : <p>Sorry, We are closed </p>}
     </footer>
+  );
+}
+
+function Order(props) {
+  return (
+    <div className="order">
+      <p>
+        We are open until {props.closeHour}:00. Come visit us or order online.
+      </p>
+      <button className="btn">Order</button>
+    </div>
   );
 }
 
 function Pizaa(props) {
   const { pizzaObj } = props;
-  console.log(pizzaObj);
   // if (!pizzaObj) {
   //   return null;
   // }
