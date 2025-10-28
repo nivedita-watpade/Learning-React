@@ -241,3 +241,7 @@ In React JS, a Fragment is a feature that lets you group multiple elements witho
 Key Point
 Fragments don’t appear in the DOM.
 You can pass keys only with the long form (<React.Fragment key={id}>), useful when mapping lists.
+
+========================== Setting Classes and Text Conditionally ====================
+In React JS, you can set classes and text conditionally using JavaScript expressions inside JSX.
+Ex. <button className={isActive ? "btn active" : "btn inactive"}>
