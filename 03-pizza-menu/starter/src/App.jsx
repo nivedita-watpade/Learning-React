@@ -46,14 +46,45 @@ const pizzaData = [
   },
 ];
 
-// const user = [
-//   {
-//     userImg: "pizzas/focaccia.jpg",
-//     name: "Nivedita Watpade",
-//     bio: "I’m a creative and detail-oriented UI Developer with over 5 years of experience in designing and developing responsive,user-focused web interfaces. Skilled in HTML, CSS, JavaScript, and React.js.",
-//     skills: ["HTML", "CSS", "Javascript", "React JS"],
-//   },
-// ];
+const user = [
+  {
+    userImg: "pizzas/focaccia.jpg",
+    name: "Nivedita Watpade",
+    bio: "I’m a creative and detail-oriented UI Developer with over 5 years of experience in designing and developing responsive,user-focused web interfaces. Skilled in HTML, CSS, JavaScript, and React.js.",
+    skills: [
+      {
+        skill: "HTML+CSS",
+        level: "advanced",
+        color: "#2662EA",
+      },
+      {
+        skill: "JavaScript",
+        level: "advanced",
+        color: "#EFD81D",
+      },
+      {
+        skill: "Web Design",
+        level: "advanced",
+        color: "#C3DCAF",
+      },
+      {
+        skill: "Git and GitHub",
+        level: "intermediate",
+        color: "#E84F33",
+      },
+      {
+        skill: "React",
+        level: "advanced",
+        color: "#60DAFB",
+      },
+      {
+        skill: "Svelte",
+        level: "beginner",
+        color: "#FF3B00",
+      },
+    ],
+  },
+];
 
 function App() {
   return (
@@ -61,6 +92,9 @@ function App() {
       <Header />
       <Menu />
       <Footer />
+      <br></br>
+      <hr></hr>
+      <ProfileCard info={user[0]} />
     </div>
   );
 }

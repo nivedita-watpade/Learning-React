@@ -18,18 +18,27 @@ function ProfileCard(props) {
 
 function SkillList(props) {
   const { skills } = props;
+
   return (
-    <div style={{ display: "flex", gap: "12px" }}>
-      <Skill skill={skills[0]} color="red" />
+    <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
+      {/* <Skill skill={skills[0]} color="red" />
       <Skill skill={skills[1]} color="green" />
       <Skill skill={skills[2]} color="yellow" />
-      <Skill skill={skills[3]} color="rgba(0, 204, 255, 0.4)" />
+      <Skill skill={skills[3]} color="rgba(0, 204, 255, 0.4)" /> */}
+      {/* {skills.map((skills, i) => {
+        return <Skill skill={skills} color="yellow" />;
+      })} */}
+      {skills.map((skill, i) => {
+        return <Skill skill={skill} key={i} />;
+      })}
     </div>
   );
 }
 
 function Skill(props) {
-  const { skill, color } = props;
+  const {
+    skill: { skill, level, color },
+  } = props;
   return (
     <div
       style={{
@@ -40,6 +49,9 @@ function Skill(props) {
       }}
     >
       {skill}
+      {level === "advanced" && " 😎"}
+      {level === "intermediate" && " 👍"}
+      {level === "beginner" && " 👏"}
     </div>
   );
 }
