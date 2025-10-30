@@ -246,3 +246,13 @@ You can pass keys only with the long form (<React.Fragment key={id}>), useful wh
 
 In React JS, you can set classes and text conditionally using JavaScript expressions inside JSX.
 Ex. <button className={isActive ? "btn active" : "btn inactive"}>
+
+================== Handling events =================================
+
+You use the onClick attribute on a React element and pass it a function.
+
+Ex. const handleClick = () => {
+alert('Button clicked!');
+};
+
+   <button onClick={handleClick}>
