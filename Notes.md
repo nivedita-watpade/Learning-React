@@ -256,3 +256,17 @@ alert('Button clicked!');
 };
 
    <button onClick={handleClick}>
+
+=============================== States ============================================
+
+STATE
+👉 Data that a component can hold over time, necessary for information that it needs to remember throughout the app’s lifecycle
+👉 “Component’s memory” 🧠
+👉 Component state: Single local component variable (“Piece of state”, “state variable”)
+👉 Updating component state triggers React to re-render the component
+
+STATE ALLOWS DEVELOPERS TO:
+1️⃣ Update the component’s view (by re-rendering it)
+2️⃣ Persist local variables between renders
+
+State is a built-in object used to store data that can change within a component. When the state changes, React automatically re-renders the component to update the UI.
