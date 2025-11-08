@@ -270,3 +270,8 @@ STATE ALLOWS DEVELOPERS TO:
 2️⃣ Persist local variables between renders
 
 State is a built-in object used to store data that can change within a component. When the state changes, React automatically re-renders the component to update the UI.
+
+-useState is a hook. useSate is used to preserve component's data and update/render the UI.
+-useState returns an array at index 0. It contains initail state value . At index 1 contains the setter function to update the state.
+Ex. const[step, setStep] = useState();
+-Hooks are always start with use keyword like useState, useEffect, useRef etc.
