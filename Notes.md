@@ -275,3 +275,5 @@ State is a built-in object used to store data that can change within a component
 -useState returns an array at index 0. It contains initail state value . At index 1 contains the setter function to update the state.
 Ex. const[step, setStep] = useState();
 -Hooks are always start with use keyword like useState, useEffect, useRef etc.
+
+Don't update state manually. Always use the setter function that React provide us.
