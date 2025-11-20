@@ -13,14 +13,21 @@ function App() {
 
   function handlePrevious() {
     if (step > 1) {
-      setStep(step - 1);
+      setStep((prevStep) => {
+        return prevStep - 1;
+      });
     }
   }
   function handleNext() {
-    if (step < 3) setStep(step + 1);
+    if (step < 3) {
+      // setStep(step + 1);
+      setStep((nextStep) => {
+        return nextStep + 1;
+      });
+    }
   }
   function displayStepper() {
-    setOpen(!open);
+    setOpen((open) => !open);
   }
   return (
     <>
