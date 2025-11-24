@@ -5,7 +5,7 @@ function ListItem(props) {
       <input type="checkbox" />
 
       <span
-        className={item.packed && "strike"}
+        className={item.packed ? "strike" : " "}
         //  style={item.packed ? { textDecoration: "line-through" } : {}}
       >
         {item.quantity} {item.description}
