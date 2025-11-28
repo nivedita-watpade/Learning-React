@@ -314,3 +314,38 @@ This usually happens in an event handler function.
 
 👉 For data that should not trigger component re-renders, don’t use state.
 Use a regular variable instead. This is a common beginner mistake.
+
+=================================== controlled element =============================
+
+A controlled component in React is an input element (like <input>, <textarea>, <select>) where React fully controls the value via state.
+
+Controlled Component (Simple Definition):
+A controlled component is a form input whose value is managed by React state.
+So the UI → always reflects → the current state.
+
+Ex.
+import { useState } from "react";
+function ControlledInput() {
+const [name, setName] = useState("");
+const handleChange = (e) => {
+setName(e.target.value); // updating state
+};
+return (
+
+<div>
+<input
+type="text"
+value={name} // input value controlled by state
+onChange={handleChange}
+/>
+<p>Typed Value: {name}</p>
+</div>
+);
+}
+
+export default ControlledInput;
+
+When user types → onChange runs
+It updates React state (setName)
+React re-renders the component
+The input shows the updated value
