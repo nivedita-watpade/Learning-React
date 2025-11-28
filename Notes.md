@@ -317,10 +317,8 @@ Use a regular variable instead. This is a common beginner mistake.
 
 =================================== controlled element =============================
 
-A controlled component in React is an input element (like <input>, <textarea>, <select>) where React fully controls the value via state.
-
-Controlled Component (Simple Definition):
-A controlled component is a form input whose value is managed by React state.
+Controlled element (Simple Definition):
+A controlled element is a form input (like <input>, <textarea>, <select>) whose value is managed by React state.
 So the UI → always reflects → the current state.
 
 Ex.
@@ -349,3 +347,29 @@ When user types → onChange runs
 It updates React state (setName)
 React re-renders the component
 The input shows the updated value
+
+Definition: Controlled Component (Controlled Element) in React
+-A controlled component is an input element whose value is fully controlled by React state.
+-The source of truth is the React state.
+-The UI updates whenever the state changes.
+-You update the state using an onChange handler.
+In simple words:
+A controlled component is an input element where React state controls the value, not the DOM.
+
+============================== state VS props =====================================
+STATE:
+
+- Internal data, owned by component
+- Component “memory”, hold a component data
+- Can be updated by the component itself
+- Updating state causes component to re-render
+- Used to make components interactive
+
+PROPS:
+
+- External data, owned by parent component
+- Similar to function parameters
+- Read-only
+- Receiving new props causes component to re-render.
+  Usually when the parent’s state has been updated
+- Used by parent to configure child component (“settings”)
