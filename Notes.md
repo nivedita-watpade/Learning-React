@@ -255,7 +255,7 @@ Ex. const handleClick = () => {
 alert('Button clicked!');
 };
 
-   <button onClick={handleClick}>
+<button onClick={handleClick}>
 
 =============================== States ============================================
 
@@ -305,7 +305,7 @@ This is data that will change at some point. In Vanilla JS, that’s a let varia
 
 👉 Whenever you want something in the component to be dynamic, create a piece of state related to that “thing”, and update the state when the “thing” should change (aka “be dynamic”).
 
-    👉 Example: A modal window can be open or closed. So we create a state variable isOpen that tracks whether the modal is open or not. On isOpen = true we display the window, on isOpen = false we hide it.
+👉 Example: A modal window can be open or closed. So we create a state variable isOpen that tracks whether the modal is open or not. On isOpen = true we display the window, on isOpen = false we hide it.
 
 👉 If you want to change the way a component looks, or the data it displays, update its state.
 This usually happens in an event handler function.
@@ -314,6 +314,24 @@ This usually happens in an event handler function.
 
 👉 For data that should not trigger component re-renders, don’t use state.
 Use a regular variable instead. This is a common beginner mistake.
+
+============================== state VS props =====================================
+STATE:
+
+- Internal data, owned by component
+- Component “memory”, hold a component data
+- Can be updated by the component itself
+- Updating state causes component to re-render
+- Used to make components interactive
+
+PROPS:
+
+- External data, owned by parent component
+- Similar to function parameters
+- Read-only
+- Receiving new props causes component to re-render.
+  Usually when the parent’s state has been updated
+- Used by parent to configure child component (“settings”)
 
 =================================== controlled element =============================
 
@@ -356,20 +374,68 @@ Definition: Controlled Component (Controlled Element) in React
 In simple words:
 A controlled component is an input element where React state controls the value, not the DOM.
 
-============================== state VS props =====================================
-STATE:
+============================== Thinking in React ===============================
 
-- Internal data, owned by component
-- Component “memory”, hold a component data
-- Can be updated by the component itself
-- Updating state causes component to re-render
-- Used to make components interactive
+THE "THINKING IN REACT" PROCESS:
+-Break the desired UI into components and establish the component tree
+-Build a static version in React (without state)
 
-PROPS:
+// state and props are state managemnt
 
-- External data, owned by parent component
-- Similar to function parameters
-- Read-only
-- Receiving new props causes component to re-render.
-  Usually when the parent’s state has been updated
-- Used by parent to configure child component (“settings”)
+-Think about state:
+.When to use state
+.Types of state: local vs. global
+.Where to place each piece of state
+
+-Establish data flow:
+.One-way data flow
+.Child-to-parent communication
+.Accessing global state
+
+WHEN YOU KNOW HOW TO "THINK IN REACT", YOU WILL BE ABLE TO ANSWER:
+-How to break up a UI design into components?
+-How to make some components reusable?
+-How to assemble UI from reusable components?
+-What pieces of state do I need for interactivity?
+-Where to place state? (What component should "own" each piece of state?)
+-What types of state can or should I use?
+-How to make data flow through app?
+
+=========================== Fundamentals of State management ===============================
+
+LOCAL STATE
+-State needed only by one or few components
+-State that is defined in a component and only that component and child components have access to it (by passing via props)
+-We should always start with local state
+
+GLOBAL STATE
+-State that many components might need
+-Shared state that is accessible to every component in the entire application
+-Tools: Context API | Redux
+
+WHEN TO CREATE STATE:
+Need to store data
+→ Will data change at some point?
+---NO → Regular const variable
+---YES → Can be computed from existing state/props? ---> YES → Derive state
+|
+NO → Should it re-render component?
+|
+NO → Ref (useRef, more on this later)
+YES → Place a new piece of state in component
+
+WHERE TO PLACE STATE:
+
+1. Place a new piece of state in the component
+
+Only used by this component?
+YES → Leave in component
+NO → Check if it's also used by a child component.
+
+Also used by a child component?
+YES → Pass to child via props
+NO → Check if it's used by one or a few sibling components.
+
+Used by one or a few sibling components?
+YES → Lift state up to the first common parent
+NO → Probably global scope.
