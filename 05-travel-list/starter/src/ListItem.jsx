@@ -1,5 +1,13 @@
 function ListItem(props) {
-  const { item } = props;
+  const { item, setItems } = props;
+
+  function handleDeleteItem(itemId) {
+    setItems((existingItems) =>
+      existingItems.filter((existingItem) => {
+        return existingItem.id !== itemId;
+      })
+    );
+  }
   return (
     <li>
       <input type="checkbox" />
@@ -10,7 +18,7 @@ function ListItem(props) {
       >
         {item.quantity} {item.description}
       </span>
-      <button>❌</button>
+      <button onClick={() => handleDeleteItem(item.id)}>❌</button>
     </li>
   );
 }

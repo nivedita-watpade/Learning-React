@@ -439,3 +439,9 @@ NO → Check if it's used by one or a few sibling components.
 Used by one or a few sibling components?
 YES → Lift state up to the first common parent
 NO → Probably global scope.
+
+============================================== Lifting state up ===============
+
+Lifting state up means: Moving the shared state to the closest common parent component when two or more child components need to use or update the same data.
+
+React recommends this so that the single source of truth is maintained in one place.

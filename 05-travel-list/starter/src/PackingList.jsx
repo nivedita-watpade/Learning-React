@@ -5,12 +5,12 @@ import ListItem from "./ListItem";
 //   { id: 2, description: "Socks", quantity: 12, packed: true },
 // ];
 
-function PackingList({ items }) {
+function PackingList({ items, setItems }) {
   return (
     <div className="list">
       <ul>
         {items.map((item) => {
-          return <ListItem item={item} key={item.id} />;
+          return <ListItem item={item} key={item.id} setItems={setItems} />;
         })}
       </ul>
     </div>
