@@ -12,7 +12,7 @@ function App() {
         <Header />
         <Form setItems={setItems} />
         <PackingList items={items} setItems={setItems} />
-        <Footer />
+        <Footer items={items} />
       </div>
     </>
   );

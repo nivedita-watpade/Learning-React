@@ -445,3 +445,9 @@ NO → Probably global scope.
 Lifting state up means: Moving the shared state to the closest common parent component when two or more child components need to use or update the same data.
 
 React recommends this so that the single source of truth is maintained in one place.
+
+================================= Derived State ================================
+
+Derived state: state that is computed from an existing piece of state or from props
+
+In React.js, derived state refers to data that is calculated from existing state or props, rather than stored independently.
