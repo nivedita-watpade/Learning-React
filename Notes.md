@@ -451,3 +451,29 @@ React recommends this so that the single source of truth is maintained in one pl
 Derived state: state that is computed from an existing piece of state or from props
 
 In React.js, derived state refers to data that is calculated from existing state or props, rather than stored independently.
+
+============================= Children Prop =======================================
+
+In React, the children prop is a special built-in prop that allows you to pass components, elements, or content between the opening and closing tags of a component.
+
+It helps create reusable and flexible components that can wrap different UI content.
+
+children represents whatever is written inside a component tag.
+
+Key Points (Interview Ready)
+-children is a reserved prop in React
+-Used to pass nested content
+-an contain text, JSX, components, or expressions
+-Makes components highly reusable
+-No need to explicitly pass it as a prop
+
+  <Button clickHandler={handlePrevious}>
+              <span>👈</span>Previous
+            </Button>
+            <Button clickHandler={handleNext}>
+              Next <span>👉</span>
+            </Button>
+
+<button className="btn" onClick={clickHandler}>
+      {children}
+    </button>
