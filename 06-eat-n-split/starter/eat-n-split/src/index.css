@@ -107,11 +107,15 @@ body {
   color: #e03131;
 }
 
+.grey {
+  color: #343a40;
+}
+
 form {
   font-size: 1.6rem;
   display: grid;
   align-items: center;
-  gap: 1.2rem;
+  /* gap: 1.2rem; */
 
   background-color: var(--color-lightest);
   border-radius: 7px;
@@ -119,12 +123,15 @@ form {
 
 .form-add-friend {
   grid-template-columns: 1fr 1.5fr;
-  margin-bottom: 1.6rem;
+  /* margin-bottom: 1.6rem; */
   padding: 1.2rem;
+  display: grid;
+  align-items: center;
 }
 .form-split-bill {
   grid-template-columns: 1fr 12rem;
-  padding: 3.2rem 4rem;
+  padding: 10px 4rem;
+  display: grid;
 }
 
 label {
@@ -133,7 +140,7 @@ label {
 
 label::first-letter {
   display: inline-block;
-  margin-right: 4px;
+  /* margin-right: 4px; */
   font-size: 1.8rem;
 }
 
@@ -166,4 +173,6 @@ form h2 {
   text-transform: uppercase;
   letter-spacing: -0.5px;
   margin-bottom: 1.6rem;
+  margin-top: 15px;
+  text-align: center;
 }
