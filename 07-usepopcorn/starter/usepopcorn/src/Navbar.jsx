@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function Navbar() {
+export default function Navbar({ movies }) {
   const [query, setQuery] = useState("");
   return (
     <nav className="nav-bar">
@@ -16,7 +16,7 @@ export default function Navbar() {
         onChange={(e) => setQuery(e.target.value)}
       />
       <p className="num-results">
-        Found <strong>X</strong> results
+        Found <strong>{movies.length}</strong> results
       </p>
     </nav>
   );

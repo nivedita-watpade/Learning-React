@@ -1,8 +1,7 @@
 import { useState } from "react";
 import Movie from "./Movie";
 
-export default function Movies({ tempMovieData }) {
-  const [movies, setMovies] = useState(tempMovieData);
+export default function Movies({ movies }) {
   const [isOpen1, setIsOpen1] = useState(true);
   return (
     <div className="box">
