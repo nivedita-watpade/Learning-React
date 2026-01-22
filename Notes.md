@@ -99,6 +99,7 @@ JSX:
 👉 We could use React without JSX
 
 React is Declarative : In this case, Tell JSX what to display on the UI not how to display or update it.
+
 Imperative: We have to manually select DOM elements and updated DOM properties.
 
 ========================== Styling React Component ===================================
@@ -477,3 +478,374 @@ Key Points (Interview Ready)
 <button className="btn" onClick={clickHandler}>
       {children}
     </button>
+
+===============================================================================================================
+
+Component Categories:
+👉 Most of your components will naturally fall into one of three categories:
+
+Stateless / Presentational Components
+-No state
+-Can receive props and simply present received data or other content
+-Usually small and reusable
+
+Stateful Components
+-Have state
+-Can still be reusable
+
+Structural Components
+-“Pages”, “layouts”, or “screens” of the app
+-Result of composition
+-Can be huge and non-reusable (but don’t have to)
+
+===============================================================
+
+Component VS Instance VS Element
+
+1. Component:
+   function Tab({ item }) {
+   return (
+
+<div className='tab-content'>
+<h4>All contacts</h4>
+<p>Your post will be visible</p>
+</div>
+);
+}
+👉 Description of a piece of UI
+👉 A component is a function that returns React elements (element tree), usually written as JSX
+👉 “Blueprint” or “Template”
+
+2. Component Instances:
+   function App() {
+   return (
+   <div className='tabs'>
+   <Tab item={content[0]} />
+   <Tab item={content[1]} />
+   <Tab item={content[2]} />
+   </div>
+   );
+   }
+
+Component hierarchy illustration:
+
+App
+
+- Tab
+- Tab
+- Tab
+
+  👉 Instances are created when we “use” components
+  👉 React internally calls Tab()
+  👉 Actual “physical” manifestation of a component
+  👉 Has its own state and props
+  👉 Has a lifecycle (can “be born”, “live”, and “die”)
+
+3. React Element:
+   👉 JSX is converted to React.createElement() function calls
+   👉 A React element is the result of these function calls
+   👉 Information necessary to create DOM elements
+
+To check react Element object console log any component.
+Ex. console.log(<DifferentContent />);
+
+4. DOM Element(HTML)
+   Actual visual representation of the component instance in the browser
+
+================================================
+How to update state based on prev value using setter function:
+
+const[userInfo,setUserInfo] = useState({name: 'abc',age: 21,});
+
+setUserInfo((prevValue)=>{
+return {...prevValue,id: 1};
+})
+
+-setterFunction receives a callback
+-In callback first argument is previous state value
+-Value returned from the callback function will be the new state value
+
+=======================================================================================
+
+How Components Are Displayed on Screen (React Rendering Process)
+
+Render Triggered → Render Phase → Commit Phase → Browser Paint
+
+1. Render is Triggered
+   Happens when state or props are updated.
+   Example: setState() or useState update.
+   This tells React that something has changed and UI may need updating.
+
+Render Phase (React Internal Process)
+React calls component functions.
+React calculates what should change in the DOM.
+It creates a new Virtual DOM and compares it with the old one (diffing).
+
+⚠️ Important:
+No real DOM changes happen here.
+No visual update on the screen.
+This phase is about decision making, not displaying.
+
+2. Commit Phase
+   React applies changes to the real DOM.
+   It performs:
+   -Insert elements
+   -Update elements
+   -Delete elements
+   This is where actual DOM manipulation happens.
+
+3. Browser Paint
+   The browser repaints the screen.
+   User finally sees the updated UI.
+   This step is handled by the browser, not React.
+
+Important Concept About "Render" in React
+👉 In React, rendering does NOT mean updating the DOM or showing UI.
+Rendering only happens inside React internally.
+It does not produce visual changes directly.
+Visual changes appear only after the Commit Phase + Browser Paint.
+
+✅ Key Takeaways
+React rendering is a logical process, not visual.
+DOM updates happen only in the Commit Phase.
+Browser handles the final display.
+State updates are the main trigger for rendering
+
+👉 Render is NOT Immediate
+React does not render instantly after a state update.
+Instead, rendering is scheduled.
+React waits until the JavaScript engine is free (not busy executing other tasks).
+
+=============================================================================================
+
+React Rendering, Reconciliation & Fiber — Complete Notes
+
+1. The Render Phase — High Level Flow
+
+Render is triggered when:
+-State changes (setState, useState)
+-Props change
+-Parent component re-renders
+
+Render Phase Flow
+Component Instances → React Elements → New Virtual DOM → Reconciliation + Diffing → Updated Fiber Tree
+
+Step-by-Step
+1️⃣ Component Instances Trigger Re-render
+-Only components affected by state/props update are re-rendered.
+-React re-executes component functions.
+
+2️⃣ React Elements Are Created
+-JSX is converted into React Elements (plain JS objects).
+-These describe what UI should look like.
+
+3️⃣ New Virtual DOM Is Built
+-React creates a new Virtual DOM tree.
+-This represents updated UI structure in memory.
+
+4️⃣ Current Fiber Tree Exists (Old UI)
+Fiber tree stores previous UI state.
+It contains:
+-Component info
+-DOM references
+-Hooks
+-State & props
+
+5️⃣ Reconciliation + Diffing (Fiber Reconciler)
+React compares:
+-Old Fiber Tree
+-New Virtual DOM
+Finds minimal changes required.
+
+6️⃣ Updated Fiber Tree Is Created
+New Fiber Tree contains:
+-What to insert
+-What to update
+-What to delete
+
+2. What is Reconciliation & Why Do We Need It?
+
+Why Not Update Whole DOM on Every Change?
+Because it is:
+🚫 Inefficient and Wasteful
+1️⃣ Writing to DOM is Slow
+DOM operations are expensive.
+
+2️⃣ Usually Only Small UI Part Changes
+Example:
+Modal opens → Only modal changes
+Button text changes → Only text changes
+Updating full DOM is unnecessary.
+
+React Solution: Reconciliation❤️
+Definition:Reconciliation is the process of deciding which DOM elements actually need to be inserted, updated, or deleted.
+
+Goal of Reconciliation
+-Reuse existing DOM
+-Apply minimum changes
+-Improve performance
+
+Example: Modal Open:
+showModal = true
+-Only modal UI is created
+-Rest of UI remains unchanged
+-React avoids full re-render of DOM
+
+3. The Reconciler — Fiber Architecture
+
+What Is Fiber Tree?
+Fiber Tree is React’s internal data structure.
+
+It contains:
+One fiber node per:
+-Component
+-DOM element
+
+Fibers Are NOT Recreated Every Render
+
+4. Reconciliation in Action (Practical Example)
+
+Initial State:
+showModal = true
+
+Tree structure:
+App
+├── Video
+├── Modal
+│ └── Overlay
+│ ├── h3
+│ └── button
+└── Btn
+
+State Update
+showModal = false
+
+New Virtual DOM Created
+App
+├── Video
+└── Btn
+
+Modal is removed.
+
+Reconciliation + Diffing Happens
+React compares:
+-Current Fiber Tree
+-New Virtual DOM
+
+5. Render Phase Final Output
+   Render Phase Produces:
+   List of Effects (DOM Update Instructions)
+
+Includes:
+-Insert operations
+-Update operations
+-Delete operations
+
+Render Phase Final Flow:
+
+Components Run
+↓
+New Virtual DOM
+↓
+Reconciliation + Diffing
+↓
+Updated Fiber Tree
+↓
+List of DOM Updates
+
+6. Key Summary (Quick Revision)
+
+   🔁 Complete Rendering Pipeline:
+   State Change
+   ↓
+   Render Phase (Calculation)
+   ↓
+   Reconciliation (Diffing)
+   ↓
+   Fiber Tree Updated
+   ↓
+   DOM Update List Created
+   ↓
+   Commit Phase (DOM Changes)
+   ↓
+   Browser Paint (UI Visible)
+
+====================================Render Phase - Recap ===================================================
+
+React Rendering Process – Complete Flow
+
+React updates UI in 4 main steps:
+-Trigger Phase
+-Render Phase
+-Commit Phase
+-Browser Paint
+
+1. Trigger Phase
+   This phase starts the rendering process.
+   Trigger happens when:
+   -Initial page load
+   -State update (setState, useState)
+   -Props change
+
+2) Render Phase (Reconciliation Phase)
+   This phase is handled by React Core.
+   What happens:
+   -React creates a new Virtual DOM
+   -Compares it with the current Fiber Tree
+   -Performs Diffing (Reconciliation)
+   -Finds what exactly changed
+   -Prepares a list of DOM updates
+
+Important Points:
+👉 Does NOT update real DOM
+👉 Does NOT show anything on screen
+👉 Only calculates changes
+
+Render Phase Features
+✔ Asynchronous
+✔ Can be paused
+✔ Can be resumed
+✔ Can be prioritized
+✔ Work can be split into chunks
+
+This makes React fast and responsive.
+
+Component Behavior:
+Rendering a parent component automatically renders all child components
+Even if child UI does not change, render logic runs
+
+Output of Render Phase
+At the end of render phase React produces:
+➡ Updated Fiber Tree
+➡ List of DOM Updates
+
+3. Commit Phase
+   This phase is handled by Renderers like:
+   -ReactDOM (Web)
+   -React Native (Mobile)
+   -Remotion (Video)
+   -Others...
+
+What happens:
+👉 React writes changes to the REAL DOM
+👉 Inserts nodes
+👉 Deletes nodes
+👉 Updates attributes
+
+Important Properties:
+✔ Synchronous
+✔ Cannot be interrupted
+✔ Happens in one go
+
+After Commit Phase:
+-The workInProgress Fiber Tree
+-Becomes the Current Fiber Tree
+-Ready for next render cycle
+
+4. Browser Paint Phase
+   Handled by the Browser (Chrome, Firefox, Safari, Edge)
+   What happens:
+   -Browser reads updated DOM
+   -Calculates layout
+   -Paints pixels
+   -Shows updated UI on screen

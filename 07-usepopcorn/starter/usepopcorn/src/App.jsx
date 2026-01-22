@@ -2,7 +2,12 @@ import { useState } from "react";
 import Navbar from "./Navbar";
 import MoviesList from "./MoviesList";
 import WatchedMoviesList from "./WatchedMoviesList";
-import WatchBox from "./WatchBox";
+import WatchedMoviesSummary from "./WatchedMoviesSummary";
+import Search from "./Search";
+import MainApp from "./MainApp";
+import Box from "./Box";
+import StarRating from "./StarRating";
+import Test from "./Test";
 
 const tempMovieData = [
   {
@@ -54,15 +59,54 @@ const tempWatchedData = [
 const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
+function handleRatings(rating) {
+  if (rating <= 3) return "Poor";
+  if (rating <= 5) return "Average";
+  if (rating <= 7) return "Good";
+  if (rating > 7) return "Very Good";
+}
+
 export default function App() {
   const [movies, setMovies] = useState(tempMovieData);
+  const [watched, setWatched] = useState(tempWatchedData);
+
   return (
     <>
-      <Navbar movies={movies} />
-      <main className="main">
-        <MoviesList movies={movies} />
-        <WatchBox average={average} tempWatchedData={tempWatchedData} />
-      </main>
+      <StarRating
+        maxRating={10}
+        color={"#000"}
+        strokeWidth={"5"}
+        strokeColor={"#000"}
+        ratingTxt={0}
+        size={35}
+        ratingsLabel={ratingsLabel}
+        onHandleRating={handleRatings}
+      />
+      <StarRating
+        maxRating={5}
+        color={"#ab0909ff"}
+        strokeWidth={"3"}
+        strokeColor={"#fcc419"}
+        ratingTxt={2}
+        onHandleRating={handleRatings}
+      />
+
+      <Test onHandleRating={handleRatings} />
+
+      {/* <Navbar movies={movies}>
+        <Search />
+      </Navbar>
+
+      <MainApp>
+        <Box>
+          <MoviesList movies={movies} />
+        </Box>
+
+        <Box>
+          <WatchedMoviesSummary watched={watched} average={average} />
+          <WatchedMoviesList watched={watched} />
+        </Box>
+      </MainApp> */}
     </>
   );
 }
