@@ -849,3 +849,53 @@ After Commit Phase:
    -Calculates layout
    -Paints pixels
    -Shows updated UI on screen
+
+====================================================
+
+How Diffing Works
+
+Rule 1: Different Element Type = New Tree
+If element type changes at same position:
+
+Ex. <div> → <header>
+
+Result:
+-React destroys old subtree
+-Removes old component & state
+-Creates new subtree
+-State is RESET
+
+Rule 2: Same Element Type = Reuse Tree
+If same element type at same position:
+Example:
+
+<div class="hidden"> → <div class="active">
+
+Result:
+-Same DOM element reused
+-Only attributes/props updated
+-Component state is preserved
+
+Stable key Prop Rule:
+Elements with same key are preserved across renders
+Helps React track list items efficiently
+Prevents unwanted re-renders
+
+When Same Position Has Different Element:
+Example:
+<SearchBar /> → <ProfileMenu />
+
+Result:
+-Old component destroyed
+-New component created
+-State lost
+-Subtree rebuilt
+
+When Same Position Has Same Element:
+<SearchBar wait={1}>
+<SearchBar wait={5}>
+
+Result:
+-Same component reused
+-Only props updated
+-State preserved
