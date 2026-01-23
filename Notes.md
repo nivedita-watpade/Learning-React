@@ -899,3 +899,49 @@ Result:
 -Same component reused
 -Only props updated
 -State preserved
+
+======================================================================
+React Key Prop – Notes
+🔹 What is the Key Prop?
+Key is a special prop in React used to help the diffing (reconciliation) algorithm identify which elements are unique.
+
+It helps React distinguish between multiple instances of the same component type.
+
+🔹 Why is Key Important?
+✅ Improves Performance
+React uses keys to efficiently update only the required elements instead of re-rendering everything.
+
+🔹 Behavior of Key Prop
+✔ When Key Stays the Same:
+-The element is kept in the DOM.
+-React reuses the existing component.
+-This happens even if the element’s position in the tree changes.
+-State inside the component is preserved.
+
+❌ When Key Changes:
+-The old element is destroyed.
+-A new element is created.
+-Component state is reset.
+-Happens even if the element’s position remains the same.
+
+🔹 Common Use Cases
+1️⃣ Using Keys in Lists
+Keys help React track items when rendering lists.
+Prevents UI bugs and unnecessary re-renders.
+Example:
+items.map(item => (
+
+  <li key={item.id}>{item.name}</li>
+))
+
+2️⃣ Using Keys to Reset State
+-Changing the key forces React to recreate the component.
+-Useful when you want to reset form fields or component state.
+Example:
+<Component key={userId} />
+
+🔹 Summary Points
+-Key uniquely identifies React elements.
+-Helps React optimize DOM updates.
+-Same key → component reused.
+-Different key → component recreated.
