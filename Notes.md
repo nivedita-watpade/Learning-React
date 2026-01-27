@@ -945,3 +945,130 @@ Example:
 -Helps React optimize DOM updates.
 -Same key → component reused.
 -Different key → component recreated.
+
+============================================================================
+
+Two Types of Logic in React Components:
+-React components contain two main types of logic:
+
+1. What is Render Logic?
+   -Code written at the top level of the component
+   -Used to describe UI structure
+   -Returns JSX
+   -Runs every time the component renders
+
+2. Event Handler Functions
+   What are Event Handlers?
+   Functions triggered by user actions
+   Executed only when an event happens
+   Examples of Events:
+   onClick, onChange, onSubmit, onKeyPress
+
+What Event Handlers Do:
+✔ Update state
+✔ Make API calls
+✔ Read input values
+✔ Navigate pages
+✔ Perform side effects
+
+Example:
+function handleClick() {
+setCount(count + 1);
+}
+
+🟦 Rules for Render Logic
+React enforces strict rules for render logic 👇
+
+Rule 1: Render Logic Must Be Pure
+Same input (props + state) → Same output (JSX)
+
+Rule 2: No Side Effects Allowed
+Render logic must NOT interact with outside world.
+-Do NOT do these in render logic:
+1.No API Calls
+2.No Timers
+3.No Direct DOM Access
+4.No External Mutation
+5.No State Updates
+⚠ Causes infinite re-render loop
+
+Where Are Side Effects Allowed?
+✅ Event Handlers
+
+Side effects are allowed and recommended here:
+✔ API calls
+✔ State updates
+✔ DOM interactions
+✔ Navigation
+✔ Local storage
+
+✅ useEffect Hook
+
+React provides a special hook for side effects:
+
+useEffect(() => {
+fetchData();
+}, []);
+
+Used for:
+-API calls
+-Subscriptions
+-Timers
+-DOM operations
+
+👉 Render = What UI looks like
+👉 Event Handler = What UI does
+
+1. RENDER LOGIC
+   👉 Code that lives at the top level of the component function
+   👉 Participates in describing how the component view looks like
+   👉 Executed every time the component renders
+
+2. EVENT HANDLER FUNCTIONS
+   👉 Executed as a consequence of the event that the handler is listening for (change event in this example)
+   👉 Code that actually does things: update state, perform an HTTP request, read an input field, navigate to another page, etc.
+
+=================================================================================
+State Batching in React:
+
+What is State Batching?
+State batching means React groups multiple state updates together and performs only one render instead of many.
+
+Why React Uses Batching?
+
+React batches state updates to:
+-Improve performance
+-Reduce unnecessary re-renders
+-Make UI updates faster
+-Optimize DOM updates
+
+✅ Example
+setCount(count + 1);
+setAge(age + 1);
+setScore(score + 1);
+
+👉 React will:
+-Combine all updates
+-Trigger one render only
+
+Where Does Batching Happen?
+
+Batching happens automatically in:
+-Event handlers (onClick, onChange)
+-React lifecycle events
+-React 18: also in setTimeout, Promise, fetch callbacks
+
+Important Point
+State updates are asynchronous because of batching:
+setCount(1);
+console.log(count); // old value
+
+👉 Updated value is available after re-render.
+
+===========================================================
+
+Batching In Practice:
+the new state was equal to the current state. And so in that situation,
+React will not even try to attempt to update the state, and then of course, it will also not re-render the component instance.
+
+Asynchronous State Updates: It emphasizes that state values may not reflect the updated state immediately, as they’ll only display new values in the next render cycle, affecting how re-renders are triggered.
