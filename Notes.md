@@ -1072,3 +1072,137 @@ the new state was equal to the current state. And so in that situation,
 React will not even try to attempt to update the state, and then of course, it will also not re-render the component instance.
 
 Asynchronous State Updates: It emphasizes that state values may not reflect the updated state immediately, as they’ll only display new values in the next render cycle, affecting how re-renders are triggered.
+
+===================================== Framework vs Library ====================================
+
+Framework vs Library, React Ecosystem & React-based Frameworks
+Framework
+
+Definition: An all-in-one toolkit (“batteries included”).
+
+Includes by default:
+-HTTP requests
+-Routing
+-Styling
+-Form management
+Example: Angular,Next.js
+
+Advantages:
+-Everything needed to build large apps is included.
+-Less setup effort.
+
+Disadvantages:
+-Less flexibility.
+-Must follow framework rules and conventions.
+
+Library
+Definition: Provides specific functionality (“separate ingredients”).
+Example: React (View library)
+
+Needs external libraries for:
+Routing
+HTTP requests
+Styling
+Form management
+
+Advantages:
+-More freedom and customization.
+-Choose best tools for your needs.
+
+Disadvantages:
+-Decision fatigue.
+-More setup and maintenance effort.
+
+React 3rd-Party Library Ecosystem
+React focuses mainly on UI. For full applications, developers use external libraries:
+
+🔹 Routing (SPA Navigation)
+-React Router
+-React Location
+
+🔹 HTTP Requests (API Calls)
+-Fetch API
+-Axios
+
+🔹 Remote State Management (Server Data)
+-React Query
+-SWR
+-Apollo (GraphQL)
+
+🔹 Global State Management
+-Context API
+-Redux
+-Zustand
+
+🔹 Styling
+-CSS Modules
+-Styled Components
+-Tailwind CSS
+
+🔹 Form Management
+-React Hook Form
+-Formik
+
+🔹 Animations & Transitions
+-Framer Motion
+-React Spring
+
+🔹 UI Component Libraries
+-Material UI (MUI)
+-Chakra UI
+-Mantine
+
+Frameworks Built on Top of React
+These are opinionated React frameworks that provide built-in tools and structure.
+
+🔹 Popular React Frameworks
+Next.js
+Remix
+Gatsby
+
+Simple Difference
+
+Framework: You work within its rules and structure.
+Library: You use it whenever you need functionality.
+
+========================== DOM Event Propagation, React Event Handling & Synthetic Events=================
+
+1️⃣ DOM Event Propagation
+When an event occurs (like a click), it travels through the DOM tree in three phases:
+
+✅ 1. Capturing Phase (Top → Down)
+-Event travels from document → target element
+-Also called trickling phase
+-Used rarely in normal applications
+
+👉 By default, most event handlers do NOT listen in capturing phase
+
+✅ 2. Target Phase
+Event(event object) reaches the actual element that was clicked
+Example: Clicking a <button>
+
+✅ 3. Bubbling Phase (Bottom → Up)
+-Event bubbles up from target → parent → document
+-This is the default behavior used by JavaScript and React
+
+🔴 Stop Bubbling
+We can stop event propagation using: event.stopPropagation();
+
+2️⃣ Event Delegation
+Event delegation means attaching one event handler to a parent element instead of adding handlers to multiple child elements.
+
+🔹 How It Works
+-Add event handler to parent container
+-Detect clicked element using event.target
+-Perform action if target matches required element
+
+3️⃣ How React Handles Events
+React does NOT attach event handlers to every element.
+Instead: 👉 React registers all event handlers on the root DOM container
+(usually div#root)
+
+4️⃣ Synthetic Events in React
+A Synthetic Event is a wrapper around the browser’s native event created by React.
+
+<input onChange={(e) => setText(e.target.value)} />
+Here e is a SyntheticEvent, not a native browser event.
