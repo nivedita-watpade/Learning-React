@@ -1288,3 +1288,131 @@ fetch(`https://www.omdbapi.com/?apikey=${KEY}&s=interstellar`)
 🔹 1. useEffect runs AFTER render
 React first renders UI
 Then useEffect executes
+
+================================= First look at effects ===========================
+
+✅ WHERE TO CREATE SIDE EFFECTS (React)
+What is a Side Effect?
+A side effect is any interaction between a React component and the outside world.
+
+Examples of Side Effects:
+-Fetching data from API
+-Setting timers (setTimeout, setInterval)
+-Subscriptions (WebSocket)
+-Accessing DOM manually
+-Local storage operations
+
+👉 In simple words:
+Side effect = Code that actually DOES something outside rendering UI
+
+❌ Where Side Effects Should NOT Be Written
+-Side effects should NOT be written inside render logic.
+-Rendering should only focus on UI.
+⚠️ Side effects should NOT be written inside render logic.
+
+✅ Two Places to Create Side Effects
+1️⃣ Event Handlers
+2️⃣ Effects (useEffect)
+
+✅ EVENT HANDLERS
+Triggered by user actions.
+Examples:onClick, onSubmit, onChange
+
+Ex. function handleClick() {
+fetch("http://www.omdbapi.com/?s=inception")
+.then(res => res.json())
+.then(data => setMovies(data.Search));
+}
+
+👉 Characteristics of Event Handlers
+✔ Runs when event happens
+✔ Used to react to user interaction
+✔ Preferred way when possible
+✔ Manual trigger
+
+✅ EFFECTS (useEffect)
+Triggered by rendering, not user action.
+
+Ex.
+useEffect(() => {
+fetch("http://www.omdbapi.com/?s=inception")
+.then(res => res.json())
+.then(data => setMovies(data.Search));
+
+return () => console.log("Cleanup");
+}, []);
+
+👉 Characteristics of useEffect
+✔ Runs after component renders
+✔ Runs on mount, re-render, unmount
+✔ Controlled by dependency array
+✔ Keeps component synchronized with external systems
+✔ Automatic execution
+
+✅ Cleanup Function
+Returned function inside useEffect
+Ex.
+return () => {
+console.log("Cleanup");
+};
+
+Used For:
+✔ Removing event listeners
+✔ Clearing timers
+✔ Canceling subscriptions
+✔ Preventing memory leaks
+
+👉 Both Event Handlers and Effects can produce the SAME result
+👉 But they run at DIFFERENT TIMES
+
+============================= with async ===============================================
+
+with async
+
+✅ Can We Make useEffect async?
+
+❌ NO — You cannot directly make useEffect async.
+
+❌ Wrong Way:
+useEffect(async () => {
+const res = await fetch(url);
+}, [])
+
+Why NOT allowed?
+Because:
+-useEffect must return nothing or a cleanup function
+-Async function always returns a Promise
+-React does not accept Promise as cleanup
+
+Correct Way
+👉 Create an async function INSIDE useEffect and call it.
+
+useEffect(function () {
+async function fetchMovies() {
+const res = await fetch(
+`https://www.omdbapi.com/?apikey=${KEY}&s=interstellar`,
+);
+const data = await res.json();
+setMovies(data.Search);
+console.log(data.Search);
+}
+fetchMovies();
+}, []);
+
+Step 1:
+useEffect runs after component renders
+
+Step 2:
+Async function is created inside effect
+
+Step 3:
+Function is called
+
+Step 4:
+API is fetched
+
+Step 5:
+State is updated
+
+Step 6:
+Component re-renders with new data
