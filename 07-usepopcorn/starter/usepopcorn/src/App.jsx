@@ -8,6 +8,7 @@ import MainApp from "./MainApp";
 import Box from "./Box";
 import StarRating from "./StarRating";
 import Test from "./Test";
+import ErrorMessage from "./ErrorMessage";
 
 const tempMovieData = [
   {
@@ -65,6 +66,9 @@ export default function App() {
   const [movies, setMovies] = useState([]);
   const [watched, setWatched] = useState(tempWatchedData);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [search, setSearch] = useState("Inception");
+  // console.log(search);
 
   // useEffect(function () {
   //   fetch(`https://www.omdbapi.com/?apikey=${KEY}&s=interstellar`)
@@ -72,33 +76,53 @@ export default function App() {
   //     .then((data) => setMovies(data.Search));
   // }, []);
 
-  useEffect(function () {
-    async function fetchMovies() {
-      try {
-        const res = await fetch(
-          `https://www.omdbapi.com/?apikey=${KEY}&s=interstellar`,
-        );
-        const data = await res.json();
-        setMovies(data.Search);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        setIsLoading(false);
+  // const handleClick = function () {
+  //   console.log("hello");
+  // };
+
+  useEffect(
+    function () {
+      async function fetchMovies() {
+        try {
+          // const movieName = search;
+          if (!search) return;
+          const res = await fetch(
+            `https://www.omdbapi.com/?apikey=${KEY}&s=${search}`,
+          );
+
+          if (!res.ok)
+            throw new Error("Something went wrong with movie fetching");
+          const data = await res.json();
+
+          if (data.Response === "False") throw new Error("No movie found");
+
+          setMovies(data.Search);
+          setError("");
+        } catch (err) {
+          setError(err.message);
+        } finally {
+          setIsLoading(false);
+        }
       }
-    }
-    fetchMovies();
-  }, []);
+      fetchMovies();
+      // return function () {
+      //   window.removeEventListener("click", handleClick);
+      // };
+    },
+    [search],
+  );
 
   return (
     <>
       <Navbar movies={movies}>
-        <Search />
+        <Search search={search} setSearch={setSearch} />
       </Navbar>
 
       <MainApp>
         <Box>
           {isLoading && <p className="loader">Loading...</p>}
-          <MoviesList movies={movies} />
+          {error && <ErrorMessage message={error} />}
+          {!isLoading && !error && <MoviesList movies={movies} />}
         </Box>
 
         <Box>
