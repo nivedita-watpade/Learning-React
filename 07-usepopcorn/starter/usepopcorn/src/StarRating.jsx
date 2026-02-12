@@ -8,7 +8,8 @@ const StarRating = ({
   strokeWidth,
   ratingTxt,
   size,
-  onHandleRating,
+  // onHandleRating,
+  onUserRating,
   setMoviesRating,
 }) => {
   const [rating, setRating] = useState(ratingTxt);
@@ -16,6 +17,7 @@ const StarRating = ({
 
   function handleRating(rating) {
     setRating(rating);
+    onUserRating(rating);
   }
 
   const txtStyle = {
@@ -23,7 +25,7 @@ const StarRating = ({
     color,
   };
 
-  const ratingLabels = onHandleRating(rating ? rating : tempRating);
+  // const ratingLabels = onHandleRating(rating ? rating : tempRating);
 
   return (
     <div className="rating">
@@ -53,7 +55,7 @@ const StarRating = ({
           ))}
         </div>
         <p style={txtStyle}>{tempRating || rating || ""}</p>
-        <p>{ratingLabels}</p>
+        {/* <p>{ratingLabels}</p> */}
       </div>
     </div>
   );

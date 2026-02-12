@@ -1416,3 +1416,119 @@ State is updated
 
 Step 6:
 Component re-renders with new data
+
+=========================================== useEffect Dependency Array =======================
+
+useEffect Dependency Array
+What is the dependency array?
+-By default, useEffect runs after every render
+-We can control when an effect runs by passing a dependency array
+-Without the dependency array, React doesn’t know when the effect should re-run
+
+How it works
+-The effect runs again every time one of the dependencies changes
+-Every state variable and prop used inside the effect MUST be included in the dependency array
+-Missing dependencies can cause a stale closure (effect uses outdated values)
+
+useEffect(() => {
+document.title = title;
+}, [title]);
+
+useEffect as a Synchronization Mechanism
+Core idea
+useEffect synchronizes React state/props with external systems
+
+External systems include:
+Browser APIs (document title, localStorage)
+Network requests
+Timers, subscriptions
+Mental model
+
+Think of useEffect as an event listener
+It listens for dependency changes
+When a dependency changes → effect runs again
+
+Effects are Reactive
+Effects react to changes in:
+-State
+-Props
+
+Just like UI re-renders when state changes, effects re-run when dependencies change
+Ex.
+useEffect(() => {
+document.title = `${title} (Rated ${userRating})`;
+}, [title, userRating]);
+
+If title changes → effect runs
+If userRating changes → effect runs
+
+Synchronization Flow
+State / Props change
+↓
+Component re-renders
+↓
+Effect runs again
+↓
+External system is updated
+
+\*React state → Browser tab title\*\
+
+Dependency Array Patterns
+-With dependencies
+useEffect(fn, [x, y, z]);
+Runs:
+-On initial render
+-Whenever x, y, or z changes
+Synchronizes with specific values
+
+Empty dependency array
+useEffect(fn, []);
+
+Runs only once
+Equivalent to componentDidMount
+Used for:
+-Initial data fetching
+-One-time setup
+
+No dependency array
+useEffect(fn);
+-Runs after every render
+-Usually bad for performance
+-Can cause infinite loops
+
+Effects and Component Lifecycle
+When are effects executed?
+
+Mount (initial render)
+-Render
+-Commit
+-Browser paint
+-Effect runs
+
+Update (dependency changes)
+-Re-render
+-Commit
+-Browser paint
+-Effect runs again
+
+Unmount
+Cleanup function runs (if provided)
+
+useEffect(() => {
+return () => {
+// cleanup
+};
+}, []);
+
+useEffect vs useLayoutEffect
+useEffect
+-Runs after browser paint
+-Non-blocking
+-Most commonly used
+
+-useEffect is not about lifecycle, it’s about synchronization
+-Dependency array controls when the effect runs
+-Always include all used state and props in dependencies
+-Empty array → run once
+-No array → run on every render
+-Incorrect dependencies → stale data bugs
