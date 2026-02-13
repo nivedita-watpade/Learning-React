@@ -36,6 +36,12 @@ const MovieDetails = ({
     setUserRating(rating);
   }
 
+  function handleKeyEvents(e) {
+    if (e.key === "Escape") {
+      handleCloseMovie();
+    }
+  }
+
   useEffect(
     function () {
       async function selectedMovie() {
@@ -49,9 +55,23 @@ const MovieDetails = ({
         setIsLoading(false);
       }
       selectedMovie();
+
+      window.addEventListener("keydown", handleKeyEvents);
+
+      return () => {
+        window.removeEventListener("keydown", handleKeyEvents);
+      };
     },
     [selectedId],
   );
+
+  useEffect(() => {
+    if (!movie.Title) return;
+    document.title = `Movie | ${movie.Title}`;
+    return function () {
+      document.title = "usePopcorn";
+    };
+  }, [movie]);
 
   return (
     <div className="details">

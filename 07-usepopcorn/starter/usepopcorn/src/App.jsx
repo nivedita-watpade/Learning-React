@@ -26,20 +26,8 @@ export default function App() {
   const [watched, setWatched] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
-  const [search, setSearch] = useState("Inception");
+  const [search, setSearch] = useState("");
   const [selectedId, setSelectedId] = useState(null);
-
-  // useEffect(function () {
-  //   fetch(`https://www.omdbapi.com/?apikey=${KEY}&s=interstellar`)
-  //     .then((res) => res.json())
-  //     .then((data) => setMovies(data.Search));
-  // }, []);
-
-  // const handleClick = function () {
-  //   console.log("hello");
-  // };
-  //SearchById- http://www.omdbapi.com/?i=tt1375666 or
-  //https://www.omdbapi.com/?apikey=${KEY}&i=tt32821057
 
   function handleSelectMovie(id) {
     setSelectedId((selectedId) => (selectedId === id ? null : id));
@@ -59,12 +47,14 @@ export default function App() {
 
   useEffect(
     function () {
+      const controller = new AbortController();
+
       async function fetchMovies() {
         try {
-          // const movieName = search;
           if (!search) return;
           const res = await fetch(
             `https://www.omdbapi.com/?apikey=${KEY}&s=${search}`,
+            { signal: controller.signal },
           );
 
           if (!res.ok)
@@ -76,15 +66,18 @@ export default function App() {
           setMovies(data.Search);
           setError("");
         } catch (err) {
-          setError(err.message);
+          if (err.name !== "AbortError") {
+            setError(err.message);
+          }
         } finally {
           setIsLoading(false);
         }
       }
+
+      handleCloseMovie();
       fetchMovies();
-      // return function () {
-      //   window.removeEventListener("click", handleClick);
-      // };
+
+      return () => controller.abort();
     },
     [search],
   );
