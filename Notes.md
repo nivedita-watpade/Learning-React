@@ -552,7 +552,7 @@ Ex. console.log(<DifferentContent />);
 4. DOM Element(HTML)
    Actual visual representation of the component instance in the browser
 
-================================================
+================================================================================
 How to update state based on prev value using setter function:
 
 const[userInfo,setUserInfo] = useState({name: 'abc',age: 21,});
@@ -1532,3 +1532,133 @@ useEffect
 -Empty array → run once
 -No array → run on every render
 -Incorrect dependencies → stale data bugs
+
+=================================The Cleanup Function (React – useEffect)=============================
+
+🔹 What is a Cleanup Function?
+-A function that we return from a useEffect hook.
+-It is optional, but often necessary.
+Ex.
+useEffect(() => {
+// effect logic
+
+return () => {
+// cleanup logic
+};
+}, []);
+
+🔹 When Does the Cleanup Function Run?
+It runs in two situations:
+
+1️⃣ Before the effect runs again
+When dependencies change
+React cleans up the previous effect before running the new one.
+
+2️⃣ After the component unmounts
+When the component is removed from the DOM
+Prevents memory leaks
+
+🔹 Component Lifecycle Flow
+🔄 Component renders
+→ Effect runs (if dependency array changed)
+
+❌ Component unmounts
+→ Cleanup function executes
+
+🔹 Common Examples
+Effect Cleanup
+HTTP request ===> Cancel request
+API subscription ===> Cancel subscription
+Start timer (setInterval) ===> Stop timer (clearInterval)
+Add event listener ===> Remove event listener
+
+Key Points:
+✅ Each useEffect should handle only one side effect
+✅ Use one useEffect per side effect
+✅ Makes cleanup easier and code more maintainable
+
+=============================== Abort Controller ===================================
+
+AbortController is a built-in Web API used to cancel asynchronous operations, mainly:
+-fetch() API requests
+-Streams
+-Some other async tasks that support abort signals
+
+It helps prevent:
+-Memory leaks
+-Unnecessary API calls
+-State updates after component unmount (very important in React)
+
+Ex.
+useEffect(() => {
+const controller = new AbortController(); //use abortcontroller
+
+    fetch("https://jsonplaceholder.typicode.com/users", {
+      signal: controller.signal,  //use abortcontroller
+    })
+      .then(res => res.json())
+      .then(data => setUsers(data))
+      .catch(err => {
+        if (err.name === "AbortError") {
+          console.log("Fetch aborted");
+        }
+      });
+
+    return () => {
+      controller.abort(); // cleanup -  //use abortcontroller
+    };
+
+}, []);
+
+====================================== custom Hookes ==================================
+
+React Hooks are special built-in functions that allow us to “hook into” React internals.
+🔹 What Hooks Allow Us To Do:
+-Create and access state (from Fiber tree)
+-Register side effects
+-Perform manual DOM selections
+-And many more features
+
+🔹 Naming Rule
+-Hooks always start with use
+-Example: useState, useEffect
+
+🔹 Why Hooks Are Powerful
+-Enable reusing non-visual logic
+-Allow creation of custom hooks
+-Let function components:
+-Own state
+-Run side effects at different lifecycle points
+
+-Before React v16.8 → this was only possible in class components
+
+🥇 Most Used Hooks
+-useState
+-useEffect
+-useReducer
+-useContext
+
+📜 Less Used Hooks
+-useRef
+-useCallback
+-useMemo
+-useTransition
+-useDeferredValue
+
+❌ Will not learn
+-useLayoutEffect
+-useDebugValue
+-useImperativeHandle
+-useId
+
+THE RULES OF HOOKS
+1️⃣ Only Call Hooks at the Top Level
+
+❌ Do NOT call hooks:
+-Inside conditionals
+-Inside loops
+-Inside nested functions
+-After an early return
+
+✅ Why?
+Hooks must always be called in the same order on every render.

@@ -18,6 +18,9 @@ const MovieDetails = ({
     (movie) => movie.imdbID === selectedId,
   )?.userRating;
 
+  // const [avgRating, setAvgRating] = useState(0);
+  // console.log(avgRating);
+
   function handleAdd() {
     const newWatchedMovie = {
       imdbID: selectedId,
@@ -28,6 +31,7 @@ const MovieDetails = ({
       poster: movie.Poster,
       userRating: userRating,
     };
+
     onHandleWatch(newWatchedMovie);
     handleCloseMovie();
   }
