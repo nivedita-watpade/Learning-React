@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Navbar from "./Navbar";
 import MoviesList from "./MoviesList";
 import WatchedMoviesList from "./WatchedMoviesList";
@@ -8,6 +8,8 @@ import MainApp from "./MainApp";
 import Box from "./Box";
 import ErrorMessage from "./ErrorMessage";
 import MovieDetails from "./MovieDetails";
+import { useMovies } from "./useMovies";
+import { useLocalStorage } from "./useLocalStorage";
 
 function handleRatings(rating) {
   if (rating <= 3) return "Poor";
@@ -16,18 +18,16 @@ function handleRatings(rating) {
   if (rating > 7) return "Very Good";
 }
 
-const average = (arr) =>
+const average = (arr = []) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
 const KEY = "43ada969";
 
 export default function App() {
-  const [movies, setMovies] = useState([]);
-  const [watched, setWatched] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState("");
   const [search, setSearch] = useState("");
   const [selectedId, setSelectedId] = useState(null);
+  const { movies, isLoading, error } = useMovies(search, handleCloseMovie);
+  const [watched, setWatched] = useLocalStorage([], "watchedMovie");
 
   function handleSelectMovie(id) {
     setSelectedId((selectedId) => (selectedId === id ? null : id));
@@ -44,43 +44,6 @@ export default function App() {
   function handleDeleteWatched(id) {
     setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
   }
-
-  useEffect(
-    function () {
-      const controller = new AbortController();
-
-      async function fetchMovies() {
-        try {
-          if (!search) return;
-          const res = await fetch(
-            `https://www.omdbapi.com/?apikey=${KEY}&s=${search}`,
-            { signal: controller.signal },
-          );
-
-          if (!res.ok)
-            throw new Error("Something went wrong with movie fetching");
-          const data = await res.json();
-
-          if (data.Response === "False") throw new Error("No movie found");
-
-          setMovies(data.Search);
-          setError("");
-        } catch (err) {
-          if (err.name !== "AbortError") {
-            setError(err.message);
-          }
-        } finally {
-          setIsLoading(false);
-        }
-      }
-
-      handleCloseMovie();
-      fetchMovies();
-
-      return () => controller.abort();
-    },
-    [search],
-  );
 
   return (
     <>
