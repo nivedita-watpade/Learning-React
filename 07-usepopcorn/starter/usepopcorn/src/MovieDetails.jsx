@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import StarRating from "./StarRating";
+import { useKey } from "./useKey";
 
 const MovieDetails = ({
   selectedId,
@@ -12,8 +13,8 @@ const MovieDetails = ({
   const [movie, setMovie] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [userRating, setUserRating] = useState(0);
-
   const countRef = useRef(0);
+  useKey("keydown", "Escape", handleCloseMovie);
 
   const isWatched = watched.map((movie) => movie.imdbID).includes(selectedId);
   const watchedUserRating = watched.find(
@@ -44,12 +45,6 @@ const MovieDetails = ({
     setUserRating(rating);
   }
 
-  function handleKeyEvents(e) {
-    if (e.key === "Escape") {
-      handleCloseMovie();
-    }
-  }
-
   useEffect(
     function () {
       async function selectedMovie() {
@@ -63,12 +58,6 @@ const MovieDetails = ({
         setIsLoading(false);
       }
       selectedMovie();
-
-      window.addEventListener("keydown", handleKeyEvents);
-
-      return () => {
-        window.removeEventListener("keydown", handleKeyEvents);
-      };
     },
     [selectedId],
   );
