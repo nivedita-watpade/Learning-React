@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
+import { useQuiz } from "../context/QuizContext";
 
-function Timer({ dispatch, totalQuestion }) {
+function Timer() {
+  const { dispatch, totalQuestion } = useQuiz();
+
   const [min, setMin] = useState(0);
   const [sec, setSec] = useState(0);
 

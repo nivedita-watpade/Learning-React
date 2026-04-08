@@ -643,6 +643,7 @@ A Synthetic Event is a wrapper around the browser’s native event created by Re
 Here e is a SyntheticEvent, not a native browser event.
 
 =============================================Summary================================================
+
 A component is like a blueprint for a piece of UI that will eventually exist on the screen. When we “use” a component, React creates a component instance, which is like an actual physical manifestation of a component, containing props, state, and more. A component instance, when rendered, will return a React element
 
 “Rendering” only means calling component functions and calculating what DOM elements need to be inserted, deleted, or updated. It has nothing to do with writing to the DOM. Therefore, each time a component instance is rendered and re-rendered, the function is called again

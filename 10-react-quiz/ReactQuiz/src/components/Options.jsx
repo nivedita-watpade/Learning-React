@@ -1,4 +1,8 @@
-function Options({ question, answer, dispatch, totalQuestion, index }) {
+import { useQuiz } from "../context/QuizContext";
+
+function Options({ question }) {
+  const { answer, dispatch, totalQuestion, index } = useQuiz();
+
   const hasAnswered = answer !== null;
   const isLastIndex = index === totalQuestion - 1;
   const isAnsLastIndex = hasAnswered && isLastIndex;

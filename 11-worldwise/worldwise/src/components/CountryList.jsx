@@ -2,8 +2,11 @@ import Spinner from "./Spinner";
 import CountryItem from "./CountryItem";
 import Message from "./Message";
 import styles from "./CountryList.module.css";
+import { useCities } from "../context/CityContext";
 
-function CountryList({ cities, isLoding }) {
+function CountryList() {
+  const { cities, isLoding } = useCities();
+
   const countries = cities.map((city) => {
     return { country: city.country, emoji: city.emoji };
   });
