@@ -225,3 +225,151 @@ function App() {
 -React.lazy() → splits bundle (code splitting)
 -Component is loaded only when rendered
 -Suspense → handles loading state
+
+=========================================================================
+
+useEffect Dependency Array – Rules
+
+✅ 1. Always include all reactive values
+Include:
+-State (useState)
+-Props
+-Context values
+If a value is used inside useEffect → it must be in dependency array
+
+👉 Example:
+useEffect(() => {
+console.log(count);
+}, [count]); // ✅ correct
+
+✅ 2. Include all “reactive values”
+
+Reactive values = anything that depends on state/props
+-Variables derived from state
+-Functions using state
+
+❗ 3. Never ignore ESLint exhaustive-deps rule
+-It tells you correct dependencies
+-Ignoring it = bugs + stale values
+
+❌ 4. Avoid objects & arrays as dependencies
+-Because they are recreated on every render
+-React sees them as new values
+useEffect(() => {}, [{}]); // ❌ wrong
+
+✔ Fix:
+Use primitives OR memoize (useMemo)
+
+🔁 Same rules apply to:
+-useMemo
+-useCallback
+
+🧹 Removing Unnecessary Dependencies
+
+🔧 1. Function dependencies
+✔ Move function inside useEffect
+useEffect(() => {
+function fetchData() {}
+fetchData();
+}, []);
+
+✔ Use useCallback if reused
+const fetchData = useCallback(() => {}, []);
+
+✔ Move outside component if no reactive values
+
+📦 2. Object dependencies
+❌ Avoid:
+useEffect(() => {}, [user]);
+
+✔ Use specific properties:
+useEffect(() => {}, [user.name, user.age]);
+
+🎯 3. Other strategies
+Use useReducer for multiple related states
+Do NOT include:
+-setState
+-dispatch
+
+👉 React guarantees they are stable
+
+⚠️ When NOT to use useEffect
+👉 Think of useEffect as a last resort (escape hatch)
+
+======================================================================
+
+🚫 Overused Cases
+❌ 1. Handling user events
+
+Bad:
+useEffect(() => {
+if (clicked) doSomething();
+}, [clicked]);
+
+✔ Good:
+<button onClick={doSomething} />
+
+❌ 2. Fetching data on mount (basic apps only)
+Works in small apps
+In real apps → use libraries like:
+-React Query
+-SWR
+
+❌ 3. Syncing state with another state
+Bad:
+useEffect(() => {
+setFullName(first + last);
+}, [first, last]);
+
+✔ Better:
+const fullName = first + last;
+
+👉 Use derived state instead
+
+🧾 Quick Summary (Interview Gold)
+-Always include all dependencies
+-Never ignore ESLint warnings
+-Avoid objects/functions unless memoized
+Prefer:
+-Derived state
+-Event handlers
+-useEffect = side effects only (API calls, subscriptions, DOM updates)
+
+=================================== Closures in useEffect ==================================
+
+A closure is when a function “remembers” variables from its outer scope even after the outer function has finished.
+
+Closure in React useEffect:
+In React, closures happen naturally because functions capture state/props at render time.
+Ex.
+
+function Counter() {
+const [count, setCount] = useState(0);
+
+useEffect(() => {
+console.log("Count:", count);
+}, []);
+
+return <button onClick={() => setCount(count + 1)}>Click</button>;
+}
+
+👉 Here:
+useEffect runs only once
+It captures count = 0 (initial value)
+
+A stale closure means:
+A function keeps using an old value of state/props instead of the latest one.
+
+Why Stale Closure Happens?
+
+Because:
+-React re-renders component
+-But useEffect with [] runs only once
+-So it doesn’t get updated state
+
+How to Fix Stale Closure
+✅ Solution 1: Add Dependency
+
+✅ Solution 2: Use Functional Update
+setCount(prev => prev + 1);
+👉 Always gets latest value
